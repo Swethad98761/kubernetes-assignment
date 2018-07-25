@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: read-write-service
+spec:
+  ports:
+    - name: read
+      port: 5500
+      targetPort: 5500
+    - name: write
+      port: 5000
+      targetPort: 5000
+  selector:
+    app: readwrite
+  type: LoadBalancer

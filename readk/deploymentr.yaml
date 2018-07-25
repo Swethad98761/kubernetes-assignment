@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: readwritelatest
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: readwrite
+    spec:
+      volumes:
+      - name: task-pv-storage
+        persistentVolumeClaim:
+         claimName: task-pv-claim
+      containers:
+      - name: readcontainer1
+        image: swethad123/read
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: "/data"
+          name: task-pv-storage
+      - name: writecontainer1
+        image: swethad123/write
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: "/data"
+          name: task-pv-storage
